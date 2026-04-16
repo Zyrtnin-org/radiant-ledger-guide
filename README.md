@@ -38,8 +38,8 @@ Designed to be used as context for AI coding agents (Claude, Cursor, etc.) — p
 
 - **Nano S Plus only** (other devices are v2 scope)
 - **P2PKH sends + receives** — standard `1...` Radiant addresses
-- **Glyph NFT receiving** — NFTs minted to your Ledger address appear correctly on-chain
-- **Glyph NFT spending** — your Ledger can sign a tx that consumes a Glyph-bearing UTXO (via direct-APDU harness; see [section 6](#6-the-glyph-spend-gotcha))
+- **Glyph NFT receiving** — when someone else mints a Glyph (via software signing) and sends it to your Ledger address, the UTXO arrives correctly on-chain
+- **Glyph NFT spending** — your Ledger can sign a tx that consumes a Glyph-bearing UTXO already held by a Ledger address (via direct-APDU harness; see [section 6](#6-the-glyph-spend-gotcha))
 - **SLIP-44 coin type 512**, BIP44 derivation path `m/44'/512'/0'/0/x`
 - **Reproducible CI builds**, SHA256s published per release
 
@@ -227,12 +227,14 @@ This is ~10,000× Bitcoin's typical rate. Don't be alarmed — it's the network 
 
 ## 5. Receiving Glyph NFTs to a Ledger Address
 
+Glyphs cannot be minted from a Ledger (see section 1 — the reveal-tx scriptSig is non-standard). But you CAN have someone else mint on your behalf and send the resulting Glyph UTXO to a Ledger-derived address.
+
 To receive a Glyph NFT on your Ledger:
 
 1. Derive a Ledger address (e.g., `m/44'/512'/0'/0/3`)
-2. Give that address to whoever is minting the Glyph (a wallet, marketplace, or a tool like FlipperHub)
-3. They mint and send to your address
-4. Glyph UTXO appears in your address on mainnet
+2. Give that address to whoever is minting the Glyph (a wallet, marketplace, or a tool like FlipperHub). They do the commit + reveal transactions using software signing (see [`radiant-glyph-nft-guide`](https://github.com/Zyrtnin-org/radiant-glyph-nft-guide) for how minting works)
+3. They set the reveal-tx's output destination to your Ledger address
+4. Once broadcast, the Glyph UTXO appears at your address on mainnet
 
 ### What to Expect
 
@@ -258,11 +260,15 @@ Total: 63 bytes for the simplest Glyph shape.
 
 Why: Electron Cash's script classifier only recognizes standard P2PKH, P2SH, and OP_RETURN shapes. A Glyph-prefixed P2PKH (63 bytes) is classified as "unknown script type" and never associated with the owning address. The wallet can't construct a spend because it doesn't see the UTXO.
 
-### Two Workarounds
+### How to Spend Today
 
-**Workaround 1**: Use the `spend_real_glyph_2in.py` harness from [`radiant-ledger-app/scripts/`](https://github.com/Zyrtnin-org/radiant-ledger-app/blob/main/scripts/spend_real_glyph_2in.py). Drives the Ledger via direct APDU to spend the Glyph UTXO.
+**Validated path** (what the v1.0 release uses): Run the `spend_real_glyph_2in.py` harness from [`radiant-ledger-app/scripts/`](https://github.com/Zyrtnin-org/radiant-ledger-app/blob/main/scripts/spend_real_glyph_2in.py). It drives the Ledger via direct APDU to spend the Glyph UTXO. Mainnet proof: [`22d4e0e07200…`](https://explorer.radiantblockchain.org/tx/22d4e0e07200437791b48651125a636b994593b215152241aef7113b24b71da3).
 
-**Workaround 2**: Implement a Glyph-aware script parser in your wallet (see [section 7](#7-for-wallet-developers-integrating-ledger-support)) and the GUI will work normally.
+This path is CLI-only and requires you to know the UTXO's txid, vout, and the path your Ledger holds it at. Acceptable for power users and for one-off transfers; not a great UX for regular users.
+
+### Future Path (Wallet Integration)
+
+For a normal Send-tab flow, wallets need a Glyph-aware script parser that links Glyph-prefixed P2PKH UTXOs to the owning address. See [section 7](#7-for-wallet-developers-integrating-ledger-support) for the pattern — roughly 20 lines of code. Once a wallet lands this, the GUI will work normally. Not implemented in `Electron-Wallet@radiant-ledger-512` yet; tracking via GitHub issues.
 
 ### Key Constraints for Spending a Glyph UTXO
 
