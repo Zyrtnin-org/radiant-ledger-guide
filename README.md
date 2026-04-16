@@ -55,7 +55,7 @@ Designed to be used as context for AI coding agents (Claude, Cursor, etc.) — p
 
 ### Current Release
 
-- **Tag**: `v0.0.6` (beta)
+- **Tag**: `v0.0.7` (beta)
 - **First mainnet-confirmed P2PKH tx**: [`de3574979f986616b4152c4294b85562318292490d3587d8fe32aff456893743`](https://explorer.radiantblockchain.org/tx/de3574979f986616b4152c4294b85562318292490d3587d8fe32aff456893743)
 - **First mainnet-confirmed Glyph spend**: [`22d4e0e07200437791b48651125a636b994593b215152241aef7113b24b71da3`](https://explorer.radiantblockchain.org/tx/22d4e0e07200437791b48651125a636b994593b215152241aef7113b24b71da3)
 
@@ -90,7 +90,7 @@ wget -q -O - https://raw.githubusercontent.com/LedgerHQ/udev-rules/master/add_ud
 ```bash
 git clone --recurse-submodules https://github.com/Zyrtnin-org/app-radiant.git
 cd app-radiant
-git checkout v0.0.6
+git checkout v0.0.7
 git submodule update --init --recursive
 
 docker run --rm \
@@ -256,7 +256,7 @@ Total: 63 bytes for the simplest Glyph shape.
 
 ## 6. The Glyph Spend Gotcha
 
-**Spending a Glyph-bearing UTXO with a Ledger is possible but NOT supported by the Electron Radiant GUI as of v0.0.6.**
+**Spending a Glyph-bearing UTXO with a Ledger is possible but NOT supported by the Electron Radiant GUI as of v0.0.7.**
 
 Why: Electron Cash's script classifier only recognizes standard P2PKH, P2SH, and OP_RETURN shapes. A Glyph-prefixed P2PKH (63 bytes) is classified as "unknown script type" and never associated with the owning address. The wallet can't construct a spend because it doesn't see the UTXO.
 
@@ -538,6 +538,7 @@ ee141e5cea504bf71b5624838f6d27223c6b8379555c3366032f9fa91384f00f  app.hex   # v0
 13da09190ed4bd6b73a4f5933eaf689f569912ea1c07540d75ef051974b98800  app.hex   # v0.0.5 initial (Glyph support)
 c78a5848680f931f10354690515ae8c9dc56a6d2f41bdfd88f22ca8f1320c258  app.hex   # v0.0.5 (output_script_is_regular relaxed)
 51bb1da11b64785d51d80e65594bda94da1d3307177c460de43c3dafe0bddab7  app.hex   # v0.0.6 (security hardening + Radiant icon)
+7e51dbff88a42752fdff333ee0f26ace9e740e7381c99737ead1f65da7318f0f  app.hex   # v0.0.7 (FSM bounds + disallow-ref conflict detection)
 ```
 
 If your build's SHA256 matches, the binary is byte-identical.
