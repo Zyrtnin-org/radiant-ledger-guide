@@ -232,7 +232,7 @@ Glyphs cannot be minted from a Ledger (see section 1 — the reveal-tx scriptSig
 To receive a Glyph NFT on your Ledger:
 
 1. Derive a Ledger address (e.g., `m/44'/512'/0'/0/3`)
-2. Give that address to whoever is minting the Glyph (a wallet, marketplace, or a tool like FlipperHub). They do the commit + reveal transactions using software signing (see [`radiant-glyph-nft-guide`](https://github.com/Zyrtnin-org/radiant-glyph-nft-guide) for how minting works)
+2. Give that address to whoever is minting the Glyph (a wallet, marketplace, or a tool like FlipperHub). They do the commit + reveal transactions using software signing (see [`radiant-glyph-guide`](https://github.com/Zyrtnin-org/radiant-glyph-guide) for how minting works)
 3. They set the reveal-tx's output destination to your Ledger address
 4. Once broadcast, the Glyph UTXO appears at your address on mainnet
 
@@ -644,7 +644,7 @@ Have a Nano S Plus and some spare RXD? Open an issue on [`app-radiant`](https://
 
 ### Related Reading
 
-- [`radiant-glyph-nft-guide`](https://github.com/Zyrtnin-org/radiant-glyph-nft-guide) — how to **mint** Glyph NFTs (software signing path)
+- [`radiant-glyph-guide`](https://github.com/Zyrtnin-org/radiant-glyph-guide) — how to **mint** Glyph NFTs (software signing path)
 - [`radiant-ledger-app`](https://github.com/Zyrtnin-org/radiant-ledger-app) — planning, Python oracle, investigation notes
 - [`app-radiant`](https://github.com/Zyrtnin-org/app-radiant) — the Ledger app source
 - [`Electron-Wallet@radiant-ledger-512`](https://github.com/Zyrtnin-org/Electron-Wallet/tree/radiant-ledger-512) — patched Electron Radiant

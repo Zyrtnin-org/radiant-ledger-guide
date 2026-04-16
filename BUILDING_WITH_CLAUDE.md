@@ -217,7 +217,7 @@ Pattern: **every AI session produces a commit AND a note about what was learned.
 
 ### Related Protocol Docs
 
-- [`radiant-glyph-nft-guide`](https://github.com/Zyrtnin-org/radiant-glyph-nft-guide) — Glyph minting (AI-agent optimized)
+- [`radiant-glyph-guide`](https://github.com/Zyrtnin-org/radiant-glyph-guide) — Glyph minting (AI-agent optimized)
 - [`radiantjs`](https://github.com/RadiantBlockchain/radiantjs) — canonical JS reference
 - [`radiant-node`](https://github.com/RadiantBlockchain/radiant-node) — C++ consensus node
 
@@ -230,7 +230,7 @@ To bring an AI up to speed on this project quickly, paste (in order):
 3. `radiant-ledger-app/INVESTIGATION.md` (per-phase narrative)
 4. The specific `docs/solutions/` entry relevant to your current problem
 
-For minting work, use [`radiant-glyph-nft-guide`](https://github.com/Zyrtnin-org/radiant-glyph-nft-guide) instead.
+For minting work, use [`radiant-glyph-guide`](https://github.com/Zyrtnin-org/radiant-glyph-guide) instead.
 
 ---
 
